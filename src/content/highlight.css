@@ -1,0 +1,58 @@
+mark.wcn-hl {
+  --wcn-bg: rgba(255, 212, 59, 0.5);
+  --wcn-line: #e8a500;
+  display: inline !important;
+  background: var(--wcn-bg) !important;
+  color: inherit !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  border: 0 !important;
+  border-radius: 2px;
+  box-shadow: none !important;
+  cursor: pointer;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  transition: background-color 0.2s;
+}
+
+mark.wcn-hl[data-wcn-color='yellow'] { --wcn-bg: rgba(255, 212, 59, 0.5); --wcn-line: #e8a500; }
+mark.wcn-hl[data-wcn-color='green'] { --wcn-bg: rgba(105, 219, 124, 0.45); --wcn-line: #2f9e44; }
+mark.wcn-hl[data-wcn-color='blue'] { --wcn-bg: rgba(116, 192, 252, 0.45); --wcn-line: #1c7ed6; }
+mark.wcn-hl[data-wcn-color='pink'] { --wcn-bg: rgba(247, 131, 172, 0.42); --wcn-line: #d6336c; }
+mark.wcn-hl[data-wcn-color='purple'] { --wcn-bg: rgba(177, 151, 252, 0.45); --wcn-line: #7048e8; }
+
+mark.wcn-hl[data-wcn-note] {
+  text-decoration: underline dashed var(--wcn-line) !important;
+  text-decoration-thickness: 1.5px !important;
+  text-underline-offset: 3px !important;
+}
+
+/* Little speech-bubble badge after the last segment of an annotated highlight. */
+mark.wcn-hl.wcn-last[data-wcn-note]::after {
+  content: '';
+  display: inline-block;
+  width: 0.8em;
+  height: 0.8em;
+  margin-left: 2px;
+  vertical-align: super;
+  background-color: var(--wcn-line);
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M4 3h16a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H9l-5 4v-4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z'/%3E%3C/svg%3E") center / contain no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M4 3h16a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H9l-5 4v-4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+
+mark.wcn-hl.wcn-active {
+  outline: 2px solid var(--wcn-line);
+  outline-offset: 1px;
+}
+
+/* background is !important (to beat site styles), which animations can't override,
+   so the flash pulses the outline instead. */
+mark.wcn-hl.wcn-flash {
+  outline: 3px solid transparent;
+  outline-offset: 1px;
+  animation: wcn-flash 0.6s ease-in-out 3;
+}
+
+@keyframes wcn-flash {
+  50% { outline-color: var(--wcn-line); }
+}

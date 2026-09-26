@@ -1,0 +1,49 @@
+{
+  "manifest_version": 3,
+  "name": "WebComment 网页批注",
+  "version": "1.0.0",
+  "description": "在任意网页上高亮文字、添加批注，再次打开时自动恢复。",
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "permissions": ["storage", "unlimitedStorage", "contextMenus", "activeTab", "favicon"],
+  "background": {
+    "service_worker": "src/background.js"
+  },
+  "action": {
+    "default_title": "WebComment",
+    "default_popup": "src/popup/popup.html",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "32": "icons/icon32.png"
+    }
+  },
+  "options_page": "src/manage/manage.html",
+  "content_scripts": [
+    {
+      "matches": ["http://*/*", "https://*/*", "file:///*"],
+      "js": [
+        "src/shared/core.js",
+        "src/content/anchor.js",
+        "src/content/highlighter.js",
+        "src/content/ui.js",
+        "src/content/content.js"
+      ],
+      "css": ["src/content/highlight.css"],
+      "run_at": "document_idle"
+    }
+  ],
+  "commands": {
+    "highlight-selection": {
+      "suggested_key": { "default": "Alt+Shift+H" },
+      "description": "高亮选中文字"
+    },
+    "annotate-selection": {
+      "suggested_key": { "default": "Alt+Shift+N" },
+      "description": "为选中文字添加批注"
+    }
+  }
+}

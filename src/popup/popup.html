@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <title>WebComment</title>
+    <link rel="stylesheet" href="popup.css" />
+  </head>
+  <body>
+    <header>
+      <div class="brand">
+        <img src="../../icons/icon32.png" alt="" />
+        <span>WebComment</span>
+      </div>
+      <span class="count" id="count" hidden></span>
+    </header>
+
+    <div class="page-title" id="pageTitle"></div>
+    <div class="banner" id="banner" hidden>
+      <span>页面在安装扩展前已打开，刷新后才能高亮。</span>
+      <button id="reload">刷新</button>
+    </div>
+
+    <main id="list"></main>
+
+    <div class="empty" id="empty" hidden>
+      <div class="empty-icon"></div>
+      <strong id="emptyTitle">还没有高亮</strong>
+      <p id="emptyText">选中网页上的文字，点击弹出的色块即可高亮；点「批注」可以写下想法。下次打开这个网页会自动恢复。</p>
+    </div>
+
+    <footer>
+      <label class="switch">
+        <input type="checkbox" id="toolbarToggle" />
+        <span class="track"></span>
+        <span>划词显示工具栏</span>
+      </label>
+      <div class="actions">
+        <button id="copyMd" disabled>复制 Markdown</button>
+        <button id="openManage" class="primary">全部笔记</button>
+      </div>
+    </footer>
+
+    <script src="../shared/core.js"></script>
+    <script src="popup.js"></script>
+  </body>
+</html>

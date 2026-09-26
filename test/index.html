@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <title>WebComment 测试文章</title>
+  <link rel="stylesheet" href="../src/content/highlight.css" />
+  <style>
+    body { max-width: 720px; margin: 40px auto; padding: 0 16px; font: 16px/1.8 system-ui, "Microsoft YaHei", sans-serif; }
+    /* Simulates hostile site CSS */
+    mark { background: red; padding: 10px; }
+    div { position: relative; }
+  </style>
+  <script src="chrome-mock.js"></script>
+</head>
+<body>
+  <article>
+    <h1>如何高效阅读网页文章</h1>
+    <p id="lead">Reading on the web is <b>fast but shallow</b>. Highlighting the key sentences helps you <a href="#x">remember what matters</a> and come back later.</p>
+    <p id="rep1">重复的短语出现在第一段。这是第一段的上下文，用来测试消歧。</p>
+    <p id="rep2">重复的短语出现在第二段。这是第二段的上下文，用来测试消歧。</p>
+    <ul>
+      <li>第一条：先通读全文。</li>
+      <li>第二条：再标注重点。</li>
+    </ul>
+    <table border="1">
+      <tr><td>单元格甲</td><td>单元格乙</td></tr>
+    </table>
+    <div id="lazy"></div>
+  </article>
+  <script>
+    // Content that appears later, like lazy-loaded / SPA-rendered text.
+    setTimeout(() => {
+      document.getElementById('lazy').innerHTML = '<p id="lazyp">这段文字是延迟两秒加载的内容。</p>';
+    }, 2000);
+  </script>
+  <script>
+    // "#shifted" variant: same URL key, but the page content changed since the notes were made.
+    if (location.hash === '#shifted') {
+      const p = document.createElement('p');
+      p.textContent = '【新插入的段落】页面改版后在文章开头多了一段话，所有文字的位置都往后移了。重复的短语也出现在这里。';
+      document.querySelector('article').prepend(p);
+      const lead = document.getElementById('lead');
+      lead.innerHTML = lead.innerHTML.replace(/ /g, '\n   ');
+    }
+  </script>
+  <script src="../src/shared/core.js"></script>
+  <script src="../src/content/anchor.js"></script>
+  <script src="../src/content/highlighter.js"></script>
+  <script src="../src/content/ui.js"></script>
+  <script src="../src/content/content.js"></script>
+  <script>
+    // Test helper: select the text of `needle` inside element `id` (can span inline children).
+    window.__select = (id, needle, occurrence = 0) => {
+      const root = document.getElementById(id);
+      const idx = WCN.anchor.buildIndex(root);
+      let at = -1;
+      for (let i = 0; i <= occurrence; i++) at = idx.text.indexOf(needle, at + 1);
+      if (at < 0) throw new Error('needle not found');
+      const pos = (off) => {
+        const n = WCN.anchor.nodeAt(idx, off);
+        return [idx.nodes[n], off - idx.starts[n]];
+      };
+      const r = document.createRange();
+      r.setStart(...pos(at));
+      const [en, eo] = pos(at + needle.length - 1);
+      r.setEnd(en, eo + 1);
+      getSelection().removeAllRanges();
+      getSelection().addRange(r);
+      return getSelection().toString();
+    };
+  </script>
+</body>
+</html>
