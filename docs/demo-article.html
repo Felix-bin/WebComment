@@ -1,9 +1,9 @@
 <!doctype html>
 <html lang="zh-CN">
 <head>
+  <!-- Plain demo article (no extension code) used by scripts/screenshots.js with the real extension loaded. -->
   <meta charset="utf-8" />
   <title>慢读的力量：为什么在网页上做笔记</title>
-  <link rel="stylesheet" href="../src/content/highlight.css" />
   <style>
     body { margin: 0; background: #fbfaf7; color: #2b2b2b; font: 17px/1.9 "Noto Serif SC", "Songti SC", "SimSun", Georgia, serif; }
     .nav { height: 56px; display: flex; align-items: center; padding: 0 40px; border-bottom: 1px solid #ece8df; font: 600 15px/1 system-ui, "Microsoft YaHei", sans-serif; color: #555; gap: 28px; }
@@ -13,7 +13,6 @@
     .byline { font: 14px system-ui, "Microsoft YaHei", sans-serif; color: #888; margin-bottom: 30px; }
     p { margin: 0 0 22px; text-align: justify; }
   </style>
-  <script src="../test/chrome-mock.js"></script>
 </head>
 <body>
   <div class="nav"><b>阅读笔记</b><span>文章</span><span>专题</span><span>关于</span></div>
@@ -26,23 +25,5 @@
     <p id="p4">好的笔记不在于多，而在于能被再次找到。当你把一年里读过的精彩段落集中到一起，按颜色区分观点、疑问和待办，你会发现，自己的思考其实一直在悄悄生长。</p>
     <p id="p5">所以，下次读到打动你的句子时，不妨停下来，把它标出来，再写上一句话。慢一点，读得才会更深。</p>
   </article>
-  <script src="../src/shared/core.js"></script>
-  <script src="../src/content/anchor.js"></script>
-  <script src="../src/content/highlighter.js"></script>
-  <script src="../src/content/ui.js"></script>
-  <script src="../src/content/content.js"></script>
-  <script>
-    window.__select = (id, needle) => {
-      const idx = WCN.anchor.buildIndex(document.getElementById(id));
-      const at = idx.text.indexOf(needle);
-      const pos = (off) => { const n = WCN.anchor.nodeAt(idx, off); return [idx.nodes[n], off - idx.starts[n]]; };
-      const r = document.createRange();
-      r.setStart(...pos(at));
-      const [en, eo] = pos(at + needle.length - 1);
-      r.setEnd(en, eo + 1);
-      getSelection().removeAllRanges();
-      getSelection().addRange(r);
-    };
-  </script>
 </body>
 </html>
