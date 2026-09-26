@@ -31,6 +31,8 @@
       padding: 5px 6px 5px 10px; background: #25262b; color: #f1f3f5; border-radius: 999px;
       box-shadow: 0 8px 24px rgba(0,0,0,.22), 0 1px 3px rgba(0,0,0,.2);
       user-select: none; animation: pop .12s ease-out;
+      /* the host is 0px wide, so shrink-to-fit would otherwise wrap the labels */
+      white-space: nowrap; width: max-content;
     }
     .dot {
       width: 18px; height: 18px; padding: 0; border: 0; border-radius: 50%;

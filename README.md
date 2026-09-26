@@ -34,6 +34,14 @@
 
 URL 规范化会去掉 `#锚点` 和 `utm_*`、`fbclid` 等跟踪参数；`#/`、`#!` 形式的前端路由会保留。
 
+## 打包发布
+
+```bash
+node scripts/pack.js   # 生成 dist/webcomment-<版本号>.zip，只包含 manifest、icons、src
+```
+
+每次发新版前先改 `manifest.json` 里的 `version`（必须比上次大）。上架商店用的文案、权限说明、截图和宣传图都在 `store/` 目录，详见 [store/listing.md](store/listing.md)；隐私政策见 [PRIVACY.md](PRIVACY.md)。
+
 ## 测试
 
 `test/` 下是一个带 `chrome.*` 模拟的测试页，可以直接在普通网页里跑内容脚本：
